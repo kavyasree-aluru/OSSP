@@ -1,0 +1,12 @@
+<!doctype html><meta charset="utf-8"><title>Deadlock Simulator Report</title>
+<style>body{font:14px system-ui;margin:2rem}table{border-collapse:collapse;margin:.5rem 0}td,th{border:1px solid #999;padding:4px 8px}h2{margin-top:1.5rem}@media print{button{display:none}}</style>
+<button onclick="print()">Print</button><h1>Deadlock Detection and Recovery Report</h1>
+<h2>Current state</h2><table><tr><th>Process</th>{% for r in v.matrices.res %}<th>Alloc {{r}}</th><th>Req {{r}}</th>{% endfor %}</tr>
+{% for p in v.matrices.pids %}{% set i=loop.index0 %}<tr><td>{{p}}</td>{% for r in v.matrices.res %}<td>{{v.matrices.alloc[i][loop.index0]}}</td><td>{{v.matrices.request[i][loop.index0]}}</td>{% endfor %}</tr>{% endfor %}</table>
+<p>Available: {{v.available}}</p>
+<h2>Results</h2><p>Wait-for graph: <b>{{v.single.verdict}}</b> - {{v.single.note}}</p>
+<p>Multi-instance detection: <b>{{ v.multi.deadlocked|join(', ') or 'no deadlock' }}</b></p>
+<p>Banker's: {{ 'safe' if v.banker.safe else 'unsafe' }} {{ v.banker.sequence|join(' -> ') }}</p>
+<p>Risk (heuristic): {{v.risk.score}} ({{v.risk.label}})</p>
+<h2>Recovery records</h2>{% for r in records if r.type=='recovery' %}<p>{{r.time}} {{r.strategy}}: deadlocked before {{r.before.deadlocked}}, after {{r.after.deadlocked}}, freed {{r.freed}}</p>{% endfor %}
+<h2>Event log</h2><table>{% for e in events %}<tr><td>{{e.time}}</td><td>{{e.kind}}</td><td>{{e.message}}</td></tr>{% endfor %}</table>

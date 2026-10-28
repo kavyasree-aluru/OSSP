@@ -1,0 +1,6 @@
+# Algorithms
+**1. Wait-for graph (`detection.detect_single_instance`)** - edge Pi->Pj if Pi requests a resource Pj holds; DFS finds a cycle and the explanatory path. Cycle = deadlock *only if every resource type has one instance*; otherwise reported as "inconclusive".
+**2. Multiple-instance detection (`detect_multi_instance`)** - Work = Available; Finish[i] = true if Pi holds nothing. Repeatedly find Pi with Finish false and Request_i <= Work; set Work += Alloc_i. Unfinished processes are deadlocked. Processes that have requests but finish are only *waiting*. O(m*n^2).
+**3. Banker's safety (`bankers.safety`)** - Need = Max - Alloc; find Pi with Need_i <= Work, Work += Alloc_i; safe iff all finish; yields a safe sequence. Unsafe does not mean deadlocked: it means deadlock is possible if processes claim their maximum.
+**Recovery (`recovery.py`)** - victim cost = 3*priority + 2*resources held + 2*recovery cost + 1*progress (lowest chosen, breakdown shown). Terminate: release all holdings, then pending requests are re-granted. Preempt: take units from a deadlocked victim that another deadlocked process waits for; victim progress resets. Every recovery re-runs detection and only reports "resolved" if it verifies.
+**Risk indicator** - heuristic = 40% waiting ratio + 30% resource contention + 30% wait-for cycle; explicitly *not* a probability.
