@@ -1,0 +1,15 @@
+.activity-panel{grid-column:1/-1}
+.activity-list{display:grid;gap:0}
+.activity-item{display:flex;align-items:center;gap:11px;padding:12px 0;border-bottom:1px solid var(--line);font-size:12px}
+.activity-item:last-child{border-bottom:0}
+.activity-item>span:nth-child(2){min-width:0;flex:1}
+.activity-item strong,.activity-item small{display:block}
+.activity-item strong{font-weight:500;color:var(--ink)}
+.activity-item small{margin-top:4px;color:var(--muted);font-size:10px}
+.activity-item time{color:var(--muted);font:10px 'DM Mono',monospace}
+.activity-mark{width:7px;height:7px;flex-shrink:0;border-radius:50%;background:#a0b0b8}
+.activity-mark.allocation{background:var(--lime)}
+.activity-mark.engine{background:var(--red)}
+.controls button:disabled,.controls input:disabled{cursor:not-allowed;opacity:.5}
+.controls button:disabled{box-shadow:none}
+@media(max-width:600px){.activity-item{align-items:flex-start}.activity-item time{white-space:nowrap}}
